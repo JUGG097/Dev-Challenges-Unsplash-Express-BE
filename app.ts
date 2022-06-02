@@ -11,15 +11,15 @@ import imagesRouter from "./routes/images.route";
 
 dotenv.config();
 const port = process.env.PORT;
-const corsOptions = {
-	origin: "http://localhost:3000",
-};
+// const corsOptions = {
+// 	origin: "http://localhost:3000",
+// };
 
 // Initialize MongoDB connection
 connectDB();
 
 const app = express();
-app.use(cors(corsOptions));
+// app.use(cors(corsOptions));
 app.use(logger("dev"));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
