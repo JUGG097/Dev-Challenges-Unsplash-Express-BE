@@ -2,6 +2,7 @@ import { Request, Response, NextFunction } from "express";
 import { validationResult } from "express-validator";
 import { omit } from "lodash";
 import Image from "../models/images.model";
+import { createImageService, deleteImageService, findImageByIdService, getImagesService } from "../services/images.service";
 
 export const getImages = async (
 	req: Request,
@@ -9,10 +10,7 @@ export const getImages = async (
 	next: NextFunction
 ) => {
 	try {
-		const images = await Image.find(
-			{},
-			{ _id: 1, img_url: 2, label: 3 }
-		).sort({ createdAt: -1 });
+		const images = await getImagesService()
 		res.status(200).json({
 			success: true,
 			data: images,
@@ -35,10 +33,7 @@ export const createImage = async (
 			res.status(400).json({ success: false, message: errors.array() });
 		}
 
-		const image = await Image.create({
-			img_url: req.body.img_url,
-			label: req.body.label,
-		});
+		const image = await createImageService(req.body.img_url, req.body.label);
 		res.status(200).json({
 			success: true,
 			data: omit(image.toJSON(), ["__v", "createdAt", "updatedAt"]),
@@ -56,7 +51,7 @@ export const deleteImage = async (
 ) => {
 	try {
 		// check if image exists
-		const image = await Image.findById(req.params.imageId);
+		const image = await findImageByIdService(req.params.imageId);
 		if (!image) {
 			res.status(400).json({
 				success: false,
@@ -64,7 +59,7 @@ export const deleteImage = async (
 			});
 		}
 
-		await Image.findByIdAndDelete(req.params.imageId);
+		await deleteImageService(req.params.imageId);
 		res.status(200).json({ success: true, data: [] });
 	} catch (error) {
 		// catch error and forward to error handler
