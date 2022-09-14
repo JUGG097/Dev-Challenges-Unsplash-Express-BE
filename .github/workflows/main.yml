@@ -37,5 +37,5 @@ jobs:
             npm install
             npx tsc
             pm2 stop unsplashExpressBE
-            pm2 start dist/app.js --name unsplashExpressBE
+            pm2 start dist/index.js --name unsplashExpressBE
             echo 'Deployment Successful To Digital Ocean'
