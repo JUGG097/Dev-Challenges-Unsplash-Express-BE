@@ -56,7 +56,7 @@ describe("Tests the fetch, create and delete image functions", () => {
                       .post("/api/v1/images")
                       .send(invalidImagePayload);
 
-		expect(resp.status).toEqual(200);
+		expect(resp.status).toEqual(400);
 	});
 
   it("Get request to fetch images", async () => {
