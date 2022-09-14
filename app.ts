@@ -4,7 +4,6 @@ import logger from "morgan";
 import createError from "http-errors";
 import cookieParser from "cookie-parser";
 import cors from "cors";
-import connectDB from "./utils/db";
 
 // Router Imports
 import imagesRouter from "./routes/images.route";
@@ -15,9 +14,6 @@ const port = process.env.PORT;
 // 	origin: "http://localhost:3000",
 // };
 
-// Initialize MongoDB connection
-connectDB();
-
 const app = express();
 app.use(cors());
 app.use(logger("dev"));
@@ -27,7 +23,7 @@ app.use(cookieParser());
 
 // Routes
 app.get("/check", (req: Request, res: Response) => {
-	res.status(200).json({ success: true, message: "Serve is up and running" });
+	res.status(200).json({ success: true, message: "Server is up and running" });
 });
 app.use("/api/v1/images", imagesRouter);
 
@@ -48,9 +44,4 @@ app.use(function (err: any, req: Request, res: Response, next: NextFunction) {
 	res.json({ success: false, error: err.message });
 });
 
-// Start the server
-app.listen(port, async () => {
-	console.log(
-		`Listening on ${port}, App is running at http://localhost:${port}`
-	);
-});
+export default app;
