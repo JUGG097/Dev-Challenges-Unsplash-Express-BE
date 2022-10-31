@@ -48,6 +48,6 @@ jobs:
             cp /var/www/unsplash.juggyprojects.com/.env /var/www/unsplash.juggyprojects.com/Dev-Challenges-Unsplash-Express-BE/.env
             npm install
             npx tsc
-            pm2 stop unsplashExpressBE
+            pm2 delete unsplashExpressBE
             pm2 start dist/index.js --name unsplashExpressBE
             echo 'Deployment Successful To Digital Ocean'
